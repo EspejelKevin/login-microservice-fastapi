@@ -44,7 +44,7 @@ class UserModelIn(BaseModel):
 
 
 class UserModel(UserModelIn):
-    rol: Optional[str] = "read"
+    rol: Optional[list] = ["read"]
     is_active: bool = True
 
 
@@ -71,3 +71,10 @@ class UserLoginModel(BaseModel):
         if all(character not in special_characters for character in v):
             raise ValueError("should contain at least one special character")
         return v
+    
+
+class UserToEncode(BaseModel):
+    rol: list
+    email: str
+    is_active: bool
+    username: str

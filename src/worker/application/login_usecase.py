@@ -1,5 +1,5 @@
-from ..domain import UserLoginModel, MongoRepository, SecuritySchema
-from shared.domain import Response, SuccessResponse
+from ..domain import UserLoginModel, MongoRepository, SecuritySchema, UserToEncode
+from shared.domain import SuccessResponse
 from shared.infrastructure import ErrorResponse
 from shared.utils import Utils
 import uuid
@@ -17,7 +17,7 @@ class LoginUserUseCase:
             raise ErrorResponse(
                 "User does not exist. Verify the input data.",
                 self.transaction_id,
-                400
+                404
             )
         if not Utils.verify_password(user.password, existing_user.get("password", "")):
             raise ErrorResponse(
@@ -25,7 +25,8 @@ class LoginUserUseCase:
                 self.transaction_id,
                 400
             )
-        access_token = self.security_schema.create_access_token(existing_user)
+        user_to_encode = UserToEncode(**existing_user)
+        access_token = self.security_schema.create_access_token(user_to_encode.dict())
         data = {"status": "User logged in with success"}
         meta = {
             "access_token": access_token,

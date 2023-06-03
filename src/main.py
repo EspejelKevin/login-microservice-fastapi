@@ -33,9 +33,9 @@ app = FastAPI(
     description=description,
     version="1.0.0",
     openapi_tags=tags,
-    docs_url=f"/{namespace}/{api_version}/users/docs",
-    openapi_url=f"/{namespace}/{api_version}/users/openapi.json",
-    redoc_url=f"/{namespace}/{api_version}/users/redoc"
+    docs_url=f"/{namespace}/{api_version}/docs",
+    openapi_url=f"/{namespace}/{api_version}/openapi.json",
+    redoc_url=f"/{namespace}/{api_version}redoc"
 )
 
 
