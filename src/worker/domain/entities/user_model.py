@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, validator
 from pydantic import EmailStr
 from typing import Optional
 
@@ -27,7 +27,7 @@ class UserModelIn(BaseModel):
         if isinstance(v, str):
             raise ValueError("must be int")
         if v < 18 or v > 100:
-            raise ValueError("must be a valid age (18-60 years)")
+            raise ValueError("must be a valid age (>=18)")
         return v
 
     @validator("password", pre=True, always=True)

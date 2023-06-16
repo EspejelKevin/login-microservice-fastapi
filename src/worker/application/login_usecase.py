@@ -1,5 +1,5 @@
 from ..domain import UserLoginModel, MongoRepository, SecuritySchema, UserToEncode
-from shared.domain import SuccessResponse
+from shared.domain import SuccessResponse, Response
 from shared.infrastructure import ErrorResponse
 from shared.utils import Utils
 import uuid
@@ -11,8 +11,14 @@ class LoginUserUseCase:
         self.transaction_id = str(uuid.uuid4())
         self.security_schema = SecuritySchema()
 
-    def execute(self, user: UserLoginModel):
+    def execute(self, user: UserLoginModel) -> Response:
         existing_user = self._mongo_service.get_user(user.username)
+        if existing_user is None:
+            raise ErrorResponse(
+                "Failed to get existing user. Try again",
+                self.transaction_id,
+                500
+            )
         if not existing_user:
             raise ErrorResponse(
                 "User does not exist. Verify the input data.",

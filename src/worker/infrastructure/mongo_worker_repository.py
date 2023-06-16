@@ -24,4 +24,4 @@ class MongoWorkerRepository(MongoRepository):
                 {"username": username},
                 projection={"_id": False}
             )
-            return result
+            return result if result else {}

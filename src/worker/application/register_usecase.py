@@ -10,8 +10,14 @@ class RegisterUserUseCase:
         self._mongo_service = mongo_service
         self.transaction_id = str(uuid.uuid4())
 
-    def execute(self, user: UserModelIn):
+    def execute(self, user: UserModelIn) -> Response:
         old_user = self._mongo_service.get_user(user.username)
+        if old_user is None:
+            raise ErrorResponse(
+                "Failed to verify the current user. Try again",
+                self.transaction_id,
+                500
+            )
         if old_user:
             raise ErrorResponse(
                 "User already exists. Try with different username.",
