@@ -1,4 +1,4 @@
-from ..domain import MongoRepository, UserModelIn, UserModel
+from worker.domain import MongoRepository, UserModelIn, UserModel
 from shared.domain import Response, SuccessResponse
 from shared.infrastructure import ErrorResponse
 from shared.utils import Utils
@@ -14,13 +14,13 @@ class RegisterUserUseCase:
         old_user = self._mongo_service.get_user(user.username)
         if old_user is None:
             raise ErrorResponse(
-                "Failed to verify the current user. Try again",
+                "Failed to verify an existing user. Try again",
                 self.transaction_id,
                 500
             )
         if old_user:
             raise ErrorResponse(
-                "User already exists. Try with different username.",
+                "User already exists. Try with different username",
                 self.transaction_id,
                 400
             )
@@ -31,7 +31,7 @@ class RegisterUserUseCase:
             data = {"status": "User registered with success"}
             return SuccessResponse(data, 200, self.transaction_id)
         raise ErrorResponse(
-            "User no registered. Try again.",
+            "User no registered. Try again",
             self.transaction_id,
             500
         )

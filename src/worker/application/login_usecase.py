@@ -1,4 +1,4 @@
-from ..domain import UserLoginModel, MongoRepository, SecuritySchema, UserToEncode
+from worker.domain import UserLoginModel, MongoRepository, SecuritySchema, UserToEncode
 from shared.domain import SuccessResponse, Response
 from shared.infrastructure import ErrorResponse
 from shared.utils import Utils
@@ -15,19 +15,19 @@ class LoginUserUseCase:
         existing_user = self._mongo_service.get_user(user.username)
         if existing_user is None:
             raise ErrorResponse(
-                "Failed to get existing user. Try again",
+                "Failed to verify an existing user. Try again",
                 self.transaction_id,
                 500
             )
         if not existing_user:
             raise ErrorResponse(
-                "User does not exist. Verify the input data.",
+                "User does not exist. Verify the input data",
                 self.transaction_id,
                 404
             )
         if not Utils.verify_password(user.password, existing_user.get("password", "")):
             raise ErrorResponse(
-                "Incorrect password. Try again.",
+                "Incorrect password. Try again",
                 self.transaction_id,
                 400
             )

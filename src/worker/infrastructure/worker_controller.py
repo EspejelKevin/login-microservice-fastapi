@@ -1,4 +1,4 @@
-from ..domain import UserModelIn, UserLoginModel
+from worker.domain import UserModelIn, UserLoginModel
 from shared.infrastructure import HttpResponse
 from shared.domain import Response
 import container

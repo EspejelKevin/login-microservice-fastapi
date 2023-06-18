@@ -1,5 +1,5 @@
 from shared.infrastructure import get_settings
-from ..domain import MongoRepository
+from worker.domain import MongoRepository
 
 
 settings = get_settings()

@@ -1,4 +1,4 @@
-from ..domain import MongoRepository
+from worker.domain import MongoRepository
 
 
 class MongoService(MongoRepository):
