@@ -1,0 +1,8 @@
+{
+    "username": "user_mocked",
+    "email": "user@example.com",
+    "name": "mocked",
+    "lastname": "mocked",
+    "age": 23,
+    "password": "UserMocked123."  
+}
